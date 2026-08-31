@@ -144,6 +144,12 @@ model:
   # defers to the EXL3_MOE_CPU_THREADS environment variable, then half the CPU core count.
   cpu_moe_threads:
 
+  # Load a model's n-gram embedding table fully into system RAM (default: False).
+  # Only affects PLE models with n-gram embeddings (e.g. Qwen3.8-Flash-Next). By default
+  # the table is streamed from disk during inference; loading it into RAM avoids
+  # per-token disk reads at the cost of tens of GB of system memory.
+  ngram_ram: false
+
   # NOTE: If a model has YaRN rope scaling, it will automatically be enabled by ExLlama.
   # rope_scale and rope_alpha settings won't apply in this case.
 

@@ -206,6 +206,13 @@ class ExllamaV3Container:
         if cpu_moe_threads is not None:
             self.config.infer_params.moe_cpu_threads = cpu_moe_threads
 
+        # Load an n-gram embedding table (PLE models) fully into system RAM
+        # instead of streaming rows from disk per forward. Must be set before
+        # the model weights are loaded
+        if unwrap(kwargs.get("ngram_ram"), False):
+            self.config.infer_params.ngram_stream_from_disk = False
+            xlogger.info("Loading n-gram embeddings into system RAM (ngram_ram).")
+
         # Prepare vision model if requested in config
         self.vision_model = None
         self.use_vision = kwargs.get("vision", False)

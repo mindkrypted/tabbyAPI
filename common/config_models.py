@@ -276,6 +276,16 @@ class ModelConfig(BaseConfigModel):
             "variable, then half the CPU core count."
         ),
     )
+    ngram_ram: Optional[bool] = Field(
+        False,
+        description=(
+            "Load a model's n-gram embedding table fully into system RAM\n"
+            "(default: False). Only affects PLE models with n-gram embeddings\n"
+            "(e.g. Qwen3.8-Flash-Next). By default the table is streamed from\n"
+            "disk during inference; loading it into RAM avoids per-token disk\n"
+            "reads at the cost of tens of GB of system memory."
+        ),
+    )
 
     rope_scale: Optional[float] = Field(
         1.0,
