@@ -1459,7 +1459,9 @@ class ExllamaV3Container:
 
                 chunk = unwrap(result.get("text"), "")
                 if chunk:
-                    chunk_tokens = result.get("token_ids", self.tokenizer.encode(chunk))
+                    chunk_tokens = result.get("token_ids")
+                    if chunk_tokens is None:
+                        chunk_tokens = self.tokenizer.encode(chunk)
                     full_response += chunk
 
                     # Extract token IDs as a plain list for downstream consumers
